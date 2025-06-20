@@ -139,102 +139,13 @@ let public = `
 let token = localStorage.getItem("token");
 
 if (token) {
-  let allitems = [];
   document.body.innerHTML = private;
 
-  // let ellist = document.querySelector(".incomes__list");
-
-  let ellogout = document.querySelector(".log-out");
-  ellogout.onclick = () => {
-    alert("siz log out qildingiz");
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
-
+  logout();
   getincomes("incomes");
-
-  let elherotitle = document.querySelector(".hero__subtitle");
-  let elbtns = document.querySelectorAll(".sidebar-btn");
-
-  elbtns.forEach((btn) => {
-    btn.onclick = (evt) => {
-      if (
-        evt.target.innerHTML == "incomes" ||
-        evt.target.innerHTML == "expenses"
-      ) {
-        getincomes(evt.target.innerHTML);
-        elherotitle.innerHTML = `${evt.target.innerHTML} page`;
-      }
-      if (evt.target.innerHTML == "all") {
-        elherotitle.innerHTML = `${evt.target.innerHTML} page`;
-        getall();
-      }
-      let elsidebar = document.querySelector(".sidebar");
-
-      elsidebar.classList.toggle("block");
-    };
-  });
-
-  async function getall() {
-    let ellist = document.querySelector(".incomes__list");
-    let elnavber = document.querySelector(".sidebar");
-    ellist.innerHTML = `
-    <div class="dark">
-    <span class="loader"></span>
-    </div>`;
-
-    // elnavber.classList.add('h')
-    let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-incomes`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        token: token,
-      },
-    });
-
-    // elnavber.classList.add('h')
-    ellist.innerHTML = "";
-
-    let data = await res.json();
-
-    let res2 = await fetch(
-      `https://kirim-chiqim-new.onrender.com/get-expenses`,
-      {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          token: token,
-        },
-      }
-    );
-
-    let data2 = await res2.json();
-
-    allitems = [];
-
-    data.forEach((el) => {
-      allitems.push(el);
-    });
-    data2.forEach((el) => {
-      allitems.push(el);
-    });
-
-    renderincomes(allitems, ellist);
-  }
-
+  sidebarbtns();
   burger();
-
-  // let elbtngroup = document.querySelector(".btn-group");
-
-  // window.onclick = (evt) => {
-  //   if (
-  //     evt.target.classList.contains("delete") ||
-  //     evt.target.classList.contains("delete-icon")
-  //   ) {
-  //     deleteitem(evt.target.dataset.id);
-  //     console.log("click");
-  //   }
-  // };
+  getcolor();
 } else {
   document.body.innerHTML = public;
 }
@@ -259,21 +170,49 @@ async function getincomes(type) {
 
   renderincomes(data, ellist);
 }
+async function getall() {
+  let ellist = document.querySelector(".incomes__list");
+  ellist.innerHTML = `
+    <div class="dark">
+    <span class="loader"></span>
+    </div>`;
 
-// async function deleteitem(id) {
-//   let res = await fetch(
-//     `https://kirim-chiqim-new.onrender.com/delete-incomes/${id}`,
-//     {
-//       method: "DELETE",
-//       headers: {
-//         "Content-type": "application/json",
-//         token: token,
-//       },
-//     }
-//   );
+  // elnavber.classList.add('h')
+  let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-incomes`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      token: token,
+    },
+  });
 
-//   console.log(res);
-// }
+  // elnavber.classList.add('h')
+  ellist.innerHTML = "";
+
+  let data = await res.json();
+
+  let res2 = await fetch(`https://kirim-chiqim-new.onrender.com/get-expenses`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      token: token,
+    },
+  });
+
+  let data2 = await res2.json();
+
+  let allitems = [];
+  allitems = [];
+
+  data.forEach((el) => {
+    allitems.push(el);
+  });
+  data2.forEach((el) => {
+    allitems.push(el);
+  });
+
+  renderincomes(allitems, ellist);
+}
 
 function renderincomes(array, list) {
   list.innerHTML = `
@@ -302,9 +241,10 @@ function renderincomes(array, list) {
             <span class="category item__span"><span class="span-activty">category </span>${
               el.category
             }</span>
-            <span class="type item__span"><span class="span-activty">type </span>${
-              el.type
-            }</span>
+            <p class="item__span item__p">
+             <span class="type">${el.type}</span>
+            </p>
+
 
             <div class="btn-group">
             <button data-id="${index + 1}" class="delete">
@@ -325,7 +265,9 @@ function renderincomes(array, list) {
 
 function getcolor() {
   document.querySelectorAll(".type").forEach((el) => {
-    let type = el.textContent.trim().toLowerCase();
+    const type = el.textContent.trim().toLowerCase();
+    el.classList.remove("green", "red");
+
     if (type === "income") {
       el.classList.add("green");
     } else if (type === "expense") {
@@ -340,5 +282,38 @@ function burger() {
 
   elburger.onclick = () => {
     elsidebar.classList.toggle("block");
+  };
+}
+
+function sidebarbtns() {
+  let elherotitle = document.querySelector(".hero__subtitle");
+  let elbtns = document.querySelectorAll(".sidebar-btn");
+
+  elbtns.forEach((btn) => {
+    btn.onclick = (evt) => {
+      if (
+        evt.target.innerHTML == "incomes" ||
+        evt.target.innerHTML == "expenses"
+      ) {
+        getincomes(evt.target.innerHTML);
+        elherotitle.innerHTML = `${evt.target.innerHTML} page`;
+      }
+      if (evt.target.innerHTML == "all") {
+        elherotitle.innerHTML = `${evt.target.innerHTML} page`;
+        getall();
+      }
+      let elsidebar = document.querySelector(".sidebar");
+
+      elsidebar.classList.toggle("block");
+    };
+  });
+}
+
+function logout() {
+  let ellogout = document.querySelector(".log-out");
+  ellogout.onclick = () => {
+    alert("siz log out qildingiz");
+    localStorage.removeItem("token");
+    window.location.reload();
   };
 }
