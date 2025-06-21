@@ -1,141 +1,3 @@
-let private = `
-    <header class="header">
-      <div class="container"></div>
-    </header>
-
-    <section class="hero">
-      <div class="hero__inner">
-        <nav class="sidebar">
-          <h3 class="siderbar-title">navbar</h3>
-
-          <ul class="sidebar__list">
-            <li class="sidebar__item">
-              <div class="sidebar__item-div">
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 16 16"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-                  ></path>
-                  <path
-                    d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
-                  ></path>
-                </svg>
-                <button class="sidebar-btn">incomes</button>
-              </div>
-            </li>
-            <li class="sidebar__item">
-              <div class="sidebar__item-div">
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 16 16"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-                  ></path>
-                  <path
-                    d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
-                  ></path>
-                </svg>
-                <button class="sidebar-btn">expenses</button>
-              </div>
-            </li>
-            <li class="sidebar__item">
-              <div class="sidebar__item-div">
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 16 16"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-                  ></path>
-                  <path
-                    d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
-                  ></path>
-                </svg>
-                <button class="sidebar-btn">all</button>
-              </div>
-            </li>
-            <li class="sidebar__item">
-              <div class="sidebar__item-div">
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 16 16"
-                  height="1em"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
-                  ></path>
-                  <path
-                    d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
-                  ></path>
-                </svg>
-                <button class="sidebar-btn">history</button>
-              </div>
-            </li>
-          </ul>
-        </nav>
-
-        <div class="hero__sidebar-div">
-          <div class="sidebar__inner">
-            <h2 class="public-title">private</h2>
-            <div class="hero-top-div">
-            <button class="log-out public-link">log out</button>
-            <button class="burger-btn">
-              <img class="burger-icon" src="./menu.svg" alt="">
-            </button>   
-            </div>
-          </div>
-          <div class="hero__main">
-          <h1 class="hero__subtitle">
-              incomes page
-          </h1>
-
-
-          <div class="list-div">
-          
-          <ul class="incomes__list">
-
-          </ul>
-          </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
- `;
-let public = `
-       <header class="header">
-        <div class="header__inner">
-          <h2 class="public-title">public</h2>
-          <div class="public-div">
-          <a href="./register.html" class="public-link">sign up</a>
-          <a href="./login.html" class="public-link">login</a>
-          </div>
-      </div>
-    </header>
-`;
-
 let token = localStorage.getItem("token");
 
 if (token) {
@@ -146,6 +8,8 @@ if (token) {
   sidebarbtns();
   burger();
   getcolor();
+  windowclick();
+
 } else {
   document.body.innerHTML = public;
 }
@@ -177,7 +41,6 @@ async function getall() {
     <span class="loader"></span>
     </div>`;
 
-  // elnavber.classList.add('h')
   let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-incomes`, {
     method: "GET",
     headers: {
@@ -186,7 +49,6 @@ async function getall() {
     },
   });
 
-  // elnavber.classList.add('h')
   ellist.innerHTML = "";
 
   let data = await res.json();
@@ -214,6 +76,33 @@ async function getall() {
   renderincomes(allitems, ellist);
 }
 
+async function deleteitem(type, id) {
+  let res = await fetch(
+    `https://kirim-chiqim-new.onrender.com/delete-${type}/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-type": "application/json",
+        token: token,
+      },
+    }
+  );
+  let data = await res.json();
+  console.log(data);
+}
+
+function windowclick() {
+  window.onclick = (evt) => {
+    if (
+      evt.target.classList.contains("delete") ||
+      evt.target.classList.contains("delete-icon")
+    ) {
+      let id = evt.target.dataset.id;
+      deleteitem("income", id);
+      deleteitem("expense", id);
+    }
+  };
+}
 function renderincomes(array, list) {
   list.innerHTML = `
         <div class="item item-top">
@@ -229,31 +118,36 @@ function renderincomes(array, list) {
   array.forEach((el, index) => {
     list.innerHTML += `
             <li class="item item-bottom">
+    
+
             <span class="id item__span"><span class="span-activty">id </span>${
               index + 1
+            }</span>
+                    <span class="title item__span"><span class="span-activty">title </span>${
+              el.title
+            }
+            </span>
+            <span class="category item__span"><span class="span-activty">category </span>${
+              el.category
             }</span>
             <span class="amount item__span"><span class="span-activty">amount </span>${
               el.amount
             }</span>
-            <span class="title item__span"><span class="span-activty">title </span>${
-              el.title
-            }</span>
-            <span class="category item__span"><span class="span-activty">category </span>${
-              el.category
-            }</span>
+
+            
             <p class="item__span item__p">
              <span class="type">${el.type}</span>
             </p>
 
 
             <div class="btn-group">
-            <button data-id="${index + 1}" class="delete">
-              <img data-id="${
-                index + 1
-              }" class="icon delete-icon" src="./Group.svg" alt="">
+            <button data-id=${el._id} class="delete">
+              <img data-id=${
+                el._id
+              } class="icon delete-icon" src="./img/Group.svg" alt="">
             </button>
             <button class="edit">
-              <img class="icon edit-icon" src="./edit.jpg" alt="">
+              <img class="icon edit-icon" src="./img/edit.jpg" alt="">
             </button>
             </div>
             </li>

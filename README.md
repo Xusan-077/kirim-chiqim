@@ -1,1 +1,0 @@
-"# kirim-chiqim" 
