@@ -57,6 +57,27 @@ let private = `
                     d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
                   ></path>
                 </svg>
+                <button class="sidebar-btn">dashboard</button>
+              </div>
+            </li>
+            <li class="sidebar__item">
+              <div class="sidebar__item-div">
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 16 16"
+                  height="1em"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+                  ></path>
+                  <path
+                    d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
+                  ></path>
+                </svg>
                 <button class="sidebar-btn">incomes</button>
               </div>
             </li>
@@ -184,7 +205,7 @@ let incomes = `
   <img class="incomes-close-btn-icon" src="./img/images.png" alt="">
   </button>
   </div>
-    <form action="" class="form">
+    <form action="" class="incomes-form">
       <input type="text" class="title form-input" placeholder="title" />
       <input type="number" class="amount form-input" placeholder="amount" />
       <input type="text" class="catigory form-input" placeholder="catigory" />
@@ -231,4 +252,38 @@ let all = `
   </h1>
 
  <ul class="incomes__list"></ul>
+`;
+
+let dashboard = `
+<ul class="dashboard__list">
+  <ul class="dashboard__list-list">
+    <li class="dashboard__item dashboard__item-active">
+      <div class="about-item__div">
+        <h4 class="about-expenses">expenses total count</h4>
+        <h3 class="total-expenses">loading...</h3>
+      </div>
+    </li>
+    <li class="dashboard__item dashboard__item-active">
+      <div class="about-item__div">
+        <h4 class="about-expenses">expenses order count</h4>
+        <h3 class="order-expenses">loading...</h3>
+      </div>
+    </li>
+  </ul>
+  <ul class="dashboard__list-list">
+    <li class="dashboard__item dashboard__item--active">
+      <div class="about-item__div">
+        <h4 class="about-incomes">incomes total count</h4>
+        <h3 class="total-incomes">loading...</h3>
+      </div>
+    </li>
+    <li class="dashboard__item dashboard__item--active">
+      <div class="about-item__div">
+        <h4 class="about-incomes">incomes order count</h4>
+        <h3 class="order-incomes">loading...</h3>
+      </div>
+    </li>
+  </ul>
+</ul>
+
 `;

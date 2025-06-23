@@ -1,108 +1,145 @@
 let token = localStorage.getItem("token");
+let allincomesamount = 0;
+let allexpensesamount = 0;
 
 if (token) {
   document.body.innerHTML = private;
+  let elmain = document.querySelector(".hero__main");
 
+  getincomesfordashbord();
+  getexpensesfordashbord();
   sidebarbtns();
   burger();
   getcolor();
   windowclick();
   renderfirst();
 
-  //=== render income modal ===
-  let eltitle = document.querySelector(".title");
-  let elamount = document.querySelector(".amount");
-  let elcatigory = document.querySelector(".catigory");
-  let eldescription = document.querySelector(".description");
-  let elform = document.querySelector(".form");
-  elform.onsubmit = (evt) => {
-    evt.preventDefault();
-    addincome("income");
-    document.querySelector(".incomes-modal").classList.remove("flex");
-  };
+  // === income modal ===
 
-  let today = new Date();
-  let month = today.getMonth() + 1;
-  let day = today.getDate();
-  let year = today.getFullYear();
-  let formattedDate = `${month}/${day}/${year}`;
+  const checkIncomesForm = setInterval(() => {
+    const elform = document.querySelector(".incomes-form");
 
-  async function addincome(type) {
-    let res = await fetch(`https://kirim-chiqim-new.onrender.com/add-${type}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        token: token,
-      },
-      body: JSON.stringify({
-        title: eltitle.value,
-        amount: +elamount.value,
-        type: "income",
-        category: elcatigory.value,
-        description: eldescription.value,
-        date: formattedDate,
-      }),
-    });
+    if (elform) {
+      clearInterval(checkIncomesForm);
 
-    let data = await res.json();
+      let eltitle = document.querySelector(".title");
+      let elamount = document.querySelector(".amount");
+      let elcatigory = document.querySelector(".catigory");
+      let eldescription = document.querySelector(".description");
 
-    if (res.ok) {
-      alert("malumot qo`shildi");
-    } else {
-      alert("xatolik!!!");
-    }
-    console.log(data);
-    console.log(res);
-  }
-  //=== render income modal ===
+      elform.onsubmit = (evt) => {
+        evt.preventDefault();
+        addincome("income");
+        document.querySelector(".incomes-modal").classList.remove("flex");
+      };
 
-  //=== render expense modal ===
-  let elmain = document.querySelector(".hero__main");
+      async function addincome(type) {
+        let today = new Date();
+        let formattedDate = `${today.getFullYear()}-${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
-  if (elmain.innerHTML == expenses) {
-    let elexpensestitle = document.querySelector(".expenses-title");
-    let elexpensesamount = document.querySelector(".expenses-amount");
-    let elexpensescatigory = document.querySelector(".expenses-catigory");
-    let elexpensesdescription = document.querySelector(".description");
-    let elformexpense = document.querySelector(".expenses-form");
+        try {
+          let res = await fetch(
+            `https://kirim-chiqim-new.onrender.com/add-${type}`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                token: token,
+              },
+              body: JSON.stringify({
+                title: eltitle.value,
+                amount: +elamount.value,
+                type: "income",
+                category: elcatigory.value,
+                description: eldescription.value,
+                date: formattedDate,
+              }),
+            }
+          );
 
-    elformexpense.onsubmit = (evt) => {
-      evt.preventDefault();
-      addexpense("expense");
-    };
+          let data = await res.json();
+          if (res.ok) {
+            alert("Ma'lumot qo‘shildi");
+            eltitle.value = "";
+            elamount.value = "";
+            elcatigory.value = "";
+            eldescription.value = "";
+          } else {
+            alert("Xatolik yuz berdi!");
+          }
 
-    async function addexpense(type) {
-      let res = await fetch(
-        `https://kirim-chiqim-new.onrender.com/add-${type}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            token: token,
-          },
-          body: JSON.stringify({
-            title: elexpensestitle.value,
-            amount: +elexpensesamount.value,
-            type: "expense",
-            category: elexpensescatigory.value,
-            description: elexpensesdescription.value,
-            date: formattedDate,
-          }),
+          console.log(data);
+        } catch (err) {
+          console.error("Xatolik:", err);
+          alert("Server bilan bog‘lanishda xatolik yuz berdi");
         }
-      );
-
-      let data = await res.json();
-
-      alert("malumot qo`shildi");
-      if (res.ok) {
-        // Optionally, you might want to update the UI here
-      } else {
-        alert("xatolik!!!");
       }
-      console.log(data);
-      console.log(res);
     }
-  }
+  }, 500);
+
+  // === expenses modal ===
+
+  const checkExpenseForm = setInterval(() => {
+    if (document.querySelector(".expenses-form")) {
+      clearInterval(checkExpenseForm);
+      let elformexpense = document.querySelector(".expenses-form");
+
+      elformexpense.onsubmit = (evt) => {
+        evt.preventDefault();
+        addexpense("expense");
+        document.querySelector(".expenses-modal").classList.remove("flex");
+      };
+
+      async function addexpense(type) {
+        let elexpensestitle = document.querySelector(".expenses-title");
+        let elexpensesamount = document.querySelector(".expenses-amount");
+        let elexpensescatigory = document.querySelector(".expenses-catigory");
+        let elexpensesdescription = document.querySelector(
+          ".expenses-description"
+        );
+
+        let today = new Date();
+        let formattedDate = `${today.getFullYear()}-${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+        let res = await fetch(
+          `https://kirim-chiqim-new.onrender.com/add-${type}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              title: elexpensestitle.value,
+              amount: +elexpensesamount.value,
+              type: "expense",
+              category: elexpensescatigory.value,
+              description: elexpensesdescription.value,
+              date: formattedDate,
+            }),
+          }
+        );
+
+        let data = await res.json();
+        if (res.ok) {
+          alert("Ma'lumot qo‘shildi");
+          elexpensestitle.value = "";
+          elexpensesamount.value = "";
+          elexpensescatigory.value = "";
+          elexpensesdescription.value = "";
+        } else {
+          alert("Xatolik yuz berdi!");
+        }
+        console.log(data);
+      }
+    }
+  }, 500);
+
+  elmain.innerHTML = dashboard;
 } else {
   document.body.innerHTML = public;
 }
@@ -125,7 +162,43 @@ async function getincomes(type) {
   ellist.innerHTML = "";
 
   let data = await res.json();
-  renderincomes(data, ellist);
+  renderincomesorexpenses(data, ellist);
+}
+
+async function getincomesfordashbord() {
+  let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-incomes`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      token: token,
+    },
+  });
+  let data = await res.json();
+
+  data.forEach((el) => {
+    allincomesamount += el.amount;
+  });
+
+  document.querySelector(".total-incomes").innerHTML = allincomesamount;
+  document.querySelector(".order-incomes").innerHTML = data.length;
+}
+
+async function getexpensesfordashbord() {
+  let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-expenses`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      token: token,
+    },
+  });
+  let data = await res.json();
+
+  data.forEach((el) => {
+    allexpensesamount += el.amount;
+  });
+
+  document.querySelector(".total-expenses").innerHTML = allexpensesamount;
+  document.querySelector(".order-expenses").innerHTML = data.length;
 }
 
 function renderfirst() {
@@ -172,7 +245,7 @@ async function getall() {
     allitems.push(el);
   });
 
-  renderincomes(allitems, ellist);
+  renderincomesorexpenses(allitems, ellist);
 }
 
 async function deleteitem(type, id) {
@@ -247,6 +320,7 @@ function windowclick() {
       document.querySelector(".modal-content-logout").classList.remove("block");
       logout();
     }
+
     // ===log out===
 
     // === add income ===
@@ -281,13 +355,13 @@ function windowclick() {
   };
 }
 
-function renderincomes(array, list) {
+function renderincomesorexpenses(array, list) {
   list.innerHTML = `
         <div class="item item-top">
           <span class="id item__span item__span-top">№</span>
-          <span class="amount item__span item__span-top">amount</span>
           <span class="title item__span item__span-top">title</span>
           <span class="category item__span item__span-top">category</span>
+          <span class="amount item__span item__span-top">amount</span>
           <span class=" item__span item__span-top">type</span>
           <span class=" item__span item__span-top">change</span>
         </div>
@@ -373,6 +447,12 @@ function sidebarbtns() {
       if (evt.target.innerHTML == "expenses") {
         elmain.innerHTML = expenses;
         getincomes(evt.target.innerHTML);
+      }
+      if (evt.target.innerHTML == "dashboard") {
+        elmain.innerHTML = dashboard;
+
+        getincomesfordashbord();
+        getexpensesfordashbord();
       }
       if (evt.target.innerHTML == "all") {
         elmain.innerHTML = all;
