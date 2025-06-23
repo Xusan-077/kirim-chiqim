@@ -15,14 +15,17 @@ body {
   font-family: sans-serif;
   background-color: #f9f9fb;
 }
+
 input {
   border: none;
 }
+
 .container {
   max-width: 900px;
   padding: 0 20px;
   margin: 0 auto;
 }
+
 .sidebar__inner {
   display: flex;
   justify-content: space-between;
@@ -37,10 +40,12 @@ input {
   background-color: #fff;
   box-shadow: 0 0 10px #0009;
 }
+
 .public-title {
   color: #009;
   font-size: 25px;
 }
+
 .public-link {
   background-color: #009;
   color: #fff;
@@ -63,17 +68,20 @@ input {
   width: 500px;
   margin-top: 30px;
 }
+
 .email {
   padding: 10px 20px;
 }
+
 .password {
   padding: 10px 20px;
 }
 
 .input {
   padding: 10px 20px;
-  outline: hidden;
+  outline: none;
 }
+
 .btn {
   background-color: #009;
   color: #fff;
@@ -91,6 +99,7 @@ input {
 .page-list {
   font-size: 40px;
 }
+
 .public-div {
   display: flex;
   gap: 5px;
@@ -122,6 +131,7 @@ input {
   align-items: start;
   height: 100vh;
 }
+
 .sidebar {
   background-color: #111827;
   padding: 25px;
@@ -133,14 +143,17 @@ input {
   margin-bottom: 30px;
   font-size: 30px;
 }
+
 .sidebar__item-div {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .sidebar__item {
   position: relative;
 }
+
 .sidebar-btn {
   max-width: 1000px;
   width: 100%;
@@ -154,6 +167,7 @@ input {
   align-items: center;
   color: #fff;
 }
+
 svg {
   position: absolute;
   top: 10px;
@@ -188,27 +202,34 @@ svg {
   padding: 15px 20px;
   border-bottom: 1px solid #e3e3e8;
 }
+
 .item-top {
   background-color: #f4f5f6;
   border-radius: 8px;
 }
+
 .btn-group {
   display: flex;
   align-items: center;
 }
+
 .id {
   color: #5946d7;
 }
+
 .amount {
   color: #1b1d1f;
 }
+
 .item__span-top {
   color: #0009;
 }
+
 .icon {
   width: 40px;
   height: 40px;
 }
+
 .loader {
   position: absolute;
   left: 50%;
@@ -243,6 +264,7 @@ svg {
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
+
 .links {
   display: flex;
   justify-content: center;
@@ -250,6 +272,7 @@ svg {
   margin-top: 10px;
   gap: 30px;
 }
+
 .back-link {
   font-size: 20px;
   color: #009;
@@ -282,10 +305,12 @@ svg {
   align-items: center;
   gap: 10px;
 }
+
 .green {
   color: #fff;
   background-color: #38a865;
 }
+
 .red {
   color: #fff;
   background-color: #f11a22;
@@ -319,6 +344,7 @@ svg {
   font-size: 18px;
   margin-bottom: 10px;
 }
+
 .modal-title {
   text-align: center;
   font-size: 20px;
@@ -330,6 +356,7 @@ svg {
   margin-top: 20px;
   gap: 5px;
 }
+
 .close-modal {
   background-color: #0009;
   padding: 10px;
@@ -337,6 +364,7 @@ svg {
   width: 80px;
   color: #fff;
 }
+
 .delete-modal {
   background-color: red;
   padding: 10px;
@@ -344,9 +372,11 @@ svg {
   width: 80px;
   color: #fff;
 }
+
 .modal-title-2 {
   color: darkgreen;
 }
+
 .btn-modal {
   background-color: #0009;
   padding: 10px;
@@ -354,6 +384,7 @@ svg {
   width: 80px;
   color: #fff;
 }
+
 .logout-modal {
   background-color: red;
   padding: 10px;
@@ -361,9 +392,117 @@ svg {
   width: 80px;
   color: #fff;
 }
+
+.add-item {
+  padding: 15px 0;
+  width: 150px;
+  background-color: #38a865;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.add-expenses {
+  background-color: red;
+}
+
+.list-top {
+  margin: 0 auto;
+  max-width: 1150px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-incomes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0009;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.add-incomes-content {
+  margin: 0 20px;
+  max-width: 455px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 400px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: none;
+  outline: none;
+}
+
+.add-incomes-title {
+  font-size: 30px;
+  color: #009;
+}
+
+.form-input:focus {
+  box-shadow: 0 5px 10px 0 #0003;
+}
+
+.modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.incomes-close-btn-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.submit {
+  padding: 15px 0;
+  background-color: #009;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.expenses-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #0009;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
 @media (max-width: 830px) {
   .back {
     position: static;
+  }
+  .list-top {
+    border-top: 1px solid #009;
+    margin: 0 20px 20px 20px;
+    padding-top: 30px;
   }
   .sidebar {
     display: none;
@@ -384,6 +523,10 @@ svg {
 }
 
 @media (max-width: 600px) {
+  .add-item {
+    padding: 10px;
+    width: 130px;
+  }
   .span-activty {
     display: block;
   }
@@ -438,13 +581,11 @@ svg {
   .btn-group {
     margin-top: 10px;
   }
-
   .btn-group {
     width: 100%;
     display: flex;
     gap: 12px;
   }
-
   .delete {
     width: 100%;
     border: 1px solid #c5c3c8;
@@ -453,12 +594,10 @@ svg {
     padding: 0 20px 0 10px;
     justify-content: space-between;
     border-radius: 8px;
-
-    &::after {
-      content: "delete";
-    }
   }
-
+  .delete::after {
+    content: "delete";
+  }
   .edit {
     width: 100%;
     border: 1px solid #c5c3c8;
@@ -467,12 +606,10 @@ svg {
     padding: 0 20px 0 10px;
     justify-content: space-between;
     border-radius: 8px;
-
-    &::after {
-      content: "edit";
-    }
   }
-
+  .edit::after {
+    content: "edit";
+  }
   .delete-icon {
     width: 30px;
     height: 30px;
@@ -481,7 +618,6 @@ svg {
     width: 30px;
     height: 30px;
   }
-
   .sidebar {
     position: absolute;
     width: 60%;
@@ -529,6 +665,12 @@ svg {
 }
 
 @media (max-width: 350px) {
+  .list-top {
+    display: block;
+  }
+  .add-item {
+    width: 100%;
+  }
   .header__inner {
     flex-direction: column;
   }
@@ -540,9 +682,11 @@ svg {
     width: 100%;
   }
 }
+
 .block {
   display: block;
 }
+
 .flex {
   display: flex;
 }

@@ -3,11 +3,106 @@ let token = localStorage.getItem("token");
 if (token) {
   document.body.innerHTML = private;
 
-  getincomes("incomes");
   sidebarbtns();
   burger();
   getcolor();
   windowclick();
+  renderfirst();
+
+  //=== render income modal ===
+  let eltitle = document.querySelector(".title");
+  let elamount = document.querySelector(".amount");
+  let elcatigory = document.querySelector(".catigory");
+  let eldescription = document.querySelector(".description");
+  let elform = document.querySelector(".form");
+  elform.onsubmit = (evt) => {
+    evt.preventDefault();
+    addincome("income");
+    document.querySelector(".incomes-modal").classList.remove("flex");
+  };
+
+  let today = new Date();
+  let month = today.getMonth() + 1;
+  let day = today.getDate();
+  let year = today.getFullYear();
+  let formattedDate = `${month}/${day}/${year}`;
+
+  async function addincome(type) {
+    let res = await fetch(`https://kirim-chiqim-new.onrender.com/add-${type}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        token: token,
+      },
+      body: JSON.stringify({
+        title: eltitle.value,
+        amount: +elamount.value,
+        type: "income",
+        category: elcatigory.value,
+        description: eldescription.value,
+        date: formattedDate,
+      }),
+    });
+
+    let data = await res.json();
+
+    if (res.ok) {
+      alert("malumot qo`shildi");
+    } else {
+      alert("xatolik!!!");
+    }
+    console.log(data);
+    console.log(res);
+  }
+  //=== render income modal ===
+
+  //=== render expense modal ===
+  let elmain = document.querySelector(".hero__main");
+
+  if (elmain.innerHTML == expenses) {
+    let elexpensestitle = document.querySelector(".expenses-title");
+    let elexpensesamount = document.querySelector(".expenses-amount");
+    let elexpensescatigory = document.querySelector(".expenses-catigory");
+    let elexpensesdescription = document.querySelector(".description");
+    let elformexpense = document.querySelector(".expenses-form");
+
+    elformexpense.onsubmit = (evt) => {
+      evt.preventDefault();
+      addexpense("expense");
+    };
+
+    async function addexpense(type) {
+      let res = await fetch(
+        `https://kirim-chiqim-new.onrender.com/add-${type}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+          body: JSON.stringify({
+            title: elexpensestitle.value,
+            amount: +elexpensesamount.value,
+            type: "expense",
+            category: elexpensescatigory.value,
+            description: elexpensesdescription.value,
+            date: formattedDate,
+          }),
+        }
+      );
+
+      let data = await res.json();
+
+      alert("malumot qo`shildi");
+      if (res.ok) {
+        // Optionally, you might want to update the UI here
+      } else {
+        alert("xatolik!!!");
+      }
+      console.log(data);
+      console.log(res);
+    }
+  }
 } else {
   document.body.innerHTML = public;
 }
@@ -18,7 +113,7 @@ async function getincomes(type) {
 
   ellist.innerHTML = `
   <div class="dark">
-    <span class="loader"></span>
+  <span class="loader"></span>
   </div>`;
   let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-${type}`, {
     method: "GET",
@@ -30,9 +125,15 @@ async function getincomes(type) {
   ellist.innerHTML = "";
 
   let data = await res.json();
-
   renderincomes(data, ellist);
 }
+
+function renderfirst() {
+  let elmain = document.querySelector(".hero__main");
+  elmain.innerHTML = incomes;
+  getincomes("incomes");
+}
+
 async function getall() {
   let ellist = document.querySelector(".incomes__list");
   ellist.innerHTML = `
@@ -63,7 +164,6 @@ async function getall() {
   let data2 = await res2.json();
 
   let allitems = [];
-  allitems = [];
 
   data.forEach((el) => {
     allitems.push(el);
@@ -89,6 +189,7 @@ async function deleteitem(type, id) {
   let data = await res.json();
   console.log(data);
 }
+
 function windowclick() {
   window.onclick = (evt) => {
     // ===delete===
@@ -148,6 +249,28 @@ function windowclick() {
     }
     // ===log out===
 
+    // === add income ===
+
+    if (evt.target.classList.contains("add-income")) {
+      document.querySelector(".incomes-modal").classList.add("flex");
+    }
+    if (
+      evt.target.classList.contains("incomes-close-btn") ||
+      evt.target.classList.contains("incomes-close-btn-icon") ||
+      evt.target.classList.contains("incomes-modal")
+    ) {
+      document.querySelector(".incomes-modal").classList.remove("flex");
+    }
+    // === add income ===
+
+    // === add expenses ===
+
+    if (evt.target.classList.contains("add-expenses")) {
+      document.querySelector(".expenses-modal").classList.add("flex");
+    }
+
+    // === add expenses ===
+
     // if (
     //   evt.target.classList.contains("edit") ||
     //   evt.target.classList.contains("edit-icon")
@@ -157,6 +280,7 @@ function windowclick() {
     // }
   };
 }
+
 function renderincomes(array, list) {
   list.innerHTML = `
         <div class="item item-top">
@@ -236,20 +360,22 @@ function burger() {
 }
 
 function sidebarbtns() {
-  let elherotitle = document.querySelector(".hero__subtitle");
   let elbtns = document.querySelectorAll(".sidebar-btn");
+
+  let elmain = document.querySelector(".hero__main");
 
   elbtns.forEach((btn) => {
     btn.onclick = (evt) => {
-      if (
-        evt.target.innerHTML == "incomes" ||
-        evt.target.innerHTML == "expenses"
-      ) {
+      if (evt.target.innerHTML == "incomes") {
+        elmain.innerHTML = incomes;
         getincomes(evt.target.innerHTML);
-        elherotitle.innerHTML = `${evt.target.innerHTML} page`;
+      }
+      if (evt.target.innerHTML == "expenses") {
+        elmain.innerHTML = expenses;
+        getincomes(evt.target.innerHTML);
       }
       if (evt.target.innerHTML == "all") {
-        elherotitle.innerHTML = `${evt.target.innerHTML} page`;
+        elmain.innerHTML = all;
         getall();
       }
       let elsidebar = document.querySelector(".sidebar");

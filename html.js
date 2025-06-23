@@ -166,5 +166,69 @@ let public = `
     </header>
 `;
 
-let allpage = `
-`
+let incomes = `
+  <div class="list-top">
+  <h1 class="hero__subtitle">
+    incomes page
+  </h1>
+  <button class="add-income add-item">add incomes</button>
+  </div>
+
+ <ul class="incomes__list"></ul>
+
+ <div class="incomes-modal add-incomes">
+  <div class="incomes-modal-content add-incomes-content">
+  <div class="modal-top">
+  <h2 class="incomes-modal-title add-incomes-title">creat income</h2>
+  <button class="incomes-close-btn">
+  <img class="incomes-close-btn-icon" src="./img/images.png" alt="">
+  </button>
+  </div>
+    <form action="" class="form">
+      <input type="text" class="title form-input" placeholder="title" />
+      <input type="number" class="amount form-input" placeholder="amount" />
+      <input type="text" class="catigory form-input" placeholder="catigory" />
+      <input type="text" class="description form-input" placeholder="description" />
+      <button class="submit">submit</button>
+    </form>
+  </div>
+</div>
+
+`;
+let expenses = `
+  <div class="list-top">
+
+  <h1 class="hero__subtitle">
+    expenses page
+  </h1>
+  <button class="add-expenses add-item">add expenses</button>
+
+  </div>
+
+ <ul class="incomes__list"></ul>
+
+   <div class="expenses-modal incomes-modal">
+  <div class="expenses-modal-content add-incomes-content">
+  <div class="modal-top">
+  <h2 class="incomes-modal-title add-incomes-title">creat expenses</h2>
+  <button class="incomes-close-btn">
+  <img class="incomes-close-btn-icon" src="./img/images.png" alt="">
+  </button>
+  </div>
+    <form action="" class="expenses-form">
+      <input type="text" class="expenses-title form-input" placeholder="title" />
+      <input type="number" class="expenses-amount form-input" placeholder="amount" />
+      <input type="text" class="expenses-catigory form-input" placeholder="catigory" />
+      <input type="text" class="expenses-description form-input" placeholder="description" />
+      <button class="submit-expenses submit">submit</button>
+    </form>
+  </div>
+</div>
+`;
+let all = `
+  <h1 class="hero__subtitle">
+    all page
+  </h1>
+
+ <ul class="incomes__list"></ul>
+`;
