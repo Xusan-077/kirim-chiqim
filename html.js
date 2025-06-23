@@ -1,4 +1,38 @@
 let private = `
+<!-- 1 - Income o'chirish modali -->
+<div class="modal">
+  <div class="modal-content">
+    <h2 class="modal-title">incomeni ochirishni hohlaysizmi</h2>
+    <div class="modal__btn-group">
+      <button class="close-modal">close</button>
+      <button class="delete-modal">delete</button>
+    </div>
+  </div>
+</div>
+
+<!-- 2 - Ma'lumot o'chirildi modali -->
+<div class="modal-2 modal">
+  <div class="modal-content-2 modal-content">
+    <h2 class="modal-title-2 modal-title">malumot ochirildi</h2>
+    <div class="modal__btn-group">
+      <button class="close-modal-2 close-modal">close</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3 - Logout modali -->
+<div class="modal-logout modal">
+  <div class="modal-content-logout modal-content">
+    <h2 class="modal-title-logout modal-title">logout qilishni hohlaysizmi</h2>
+    <div class="modal__btn-group">
+      <button class="close-modal-logout btn-modal">close</button>
+      <button class="logout-modal btn-modal">log out</button>
+    </div>
+  </div>
+</div>
+
+
+
     <section class="hero">
       <div class="hero__inner">
         <nav class="sidebar">
@@ -131,3 +165,6 @@ let public = `
       </div>
     </header>
 `;
+
+let allpage = `
+`

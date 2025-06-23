@@ -33,5 +33,7 @@ async function render() {
     localStorage.setItem("token", token);
     window.location.href = "index.html";
     alert("siz kirdingiz");
+  } else {
+    alert("bunday foydalanuvchi yo`q iltimos sign up qiling")
   }
 }

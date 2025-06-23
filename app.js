@@ -3,16 +3,15 @@ let token = localStorage.getItem("token");
 if (token) {
   document.body.innerHTML = private;
 
-  logout();
   getincomes("incomes");
   sidebarbtns();
   burger();
   getcolor();
   windowclick();
-
 } else {
   document.body.innerHTML = public;
 }
+let id = "";
 
 async function getincomes(type) {
   let ellist = document.querySelector(".incomes__list");
@@ -90,17 +89,72 @@ async function deleteitem(type, id) {
   let data = await res.json();
   console.log(data);
 }
-
 function windowclick() {
   window.onclick = (evt) => {
+    // ===delete===
     if (
       evt.target.classList.contains("delete") ||
       evt.target.classList.contains("delete-icon")
     ) {
-      let id = evt.target.dataset.id;
+      document.querySelector(".modal").classList.add("flex");
+      document.querySelector(".modal-content").classList.add("block");
+      id = evt.target.dataset.id;
+    }
+
+    if (
+      evt.target.classList.contains("modal") ||
+      evt.target.classList.contains("close-modal")
+    ) {
+      document.querySelector(".modal").classList.remove("flex");
+      document.querySelector(".modal-content").classList.remove("block");
+    }
+
+    if (evt.target.classList.contains("delete-modal")) {
       deleteitem("income", id);
       deleteitem("expense", id);
+      document.querySelector(".modal").classList.remove("flex");
+      document.querySelector(".modal-content").classList.remove("block");
+
+      document.querySelector(".modal-2").classList.add("flex");
+      document.querySelector(".modal-content-2").classList.add("block");
     }
+
+    if (
+      evt.target.classList.contains("close-modal-2") ||
+      evt.target.classList.contains("modal-2")
+    ) {
+      document.querySelector(".modal-2").classList.remove("flex");
+      document.querySelector(".modal-content-2").classList.remove("block");
+    }
+    // ===delete===
+
+    //=== log out===
+    if (evt.target.classList.contains("log-out")) {
+      document.querySelector(".modal-logout").classList.add("flex");
+      document.querySelector(".modal-content-logout").classList.add("block");
+    }
+
+    if (
+      evt.target.classList.contains("close-modal-logout") ||
+      evt.target.classList.contains("modal-logout")
+    ) {
+      document.querySelector(".modal-logout").classList.remove("flex");
+      document.querySelector(".modal-content-logout").classList.remove("block");
+    }
+    if (evt.target.classList.contains("logout-modal")) {
+      document.querySelector(".modal-logout").classList.remove("flex");
+      document.querySelector(".modal-content-logout").classList.remove("block");
+      logout();
+    }
+    // ===log out===
+
+    // if (
+    //   evt.target.classList.contains("edit") ||
+    //   evt.target.classList.contains("edit-icon")
+    // ) {
+    //   let id = evt.target.dataset.id;
+    //   edititem("income", id);
+    // }
   };
 }
 function renderincomes(array, list) {
@@ -124,8 +178,8 @@ function renderincomes(array, list) {
               index + 1
             }</span>
                     <span class="title item__span"><span class="span-activty">title </span>${
-              el.title
-            }
+                      el.title
+                    }
             </span>
             <span class="category item__span"><span class="span-activty">category </span>${
               el.category
@@ -146,8 +200,10 @@ function renderincomes(array, list) {
                 el._id
               } class="icon delete-icon" src="./img/Group.svg" alt="">
             </button>
-            <button class="edit">
-              <img class="icon edit-icon" src="./img/edit.jpg" alt="">
+            <button data-id=${el._id} class="edit">
+              <img data-id=${
+                el._id
+              } class="icon edit-icon" src="./img/edit.jpg" alt="">
             </button>
             </div>
             </li>
@@ -204,10 +260,29 @@ function sidebarbtns() {
 }
 
 function logout() {
-  let ellogout = document.querySelector(".log-out");
-  ellogout.onclick = () => {
-    alert("siz log out qildingiz");
-    localStorage.removeItem("token");
-    window.location.reload();
-  };
+  localStorage.removeItem("token");
+  window.location.reload();
 }
+
+// async function edititem(type, id) {
+//   let res = await fetch(
+//     `https://kirim-chiqim-new.onrender.com/edit-${type}/${id}`,
+//     {
+//       method: "PUT",
+//       headers: {
+//         "Content-type": "application/json",
+//         token: token,
+//       },
+//       body: JSON.stringify({
+//         title:'asda',
+//         amount: 12,
+//         type: "income",
+//         category: 'sadasd',
+//         description: 'sddadsa',
+//         date: '25-25-25',
+//       }),
+//     }
+//   );
+
+//   console.log(res);
+// }
