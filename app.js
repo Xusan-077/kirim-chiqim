@@ -1,149 +1,22 @@
 let token = localStorage.getItem("token");
 let allincomesamount = 0;
 let allexpensesamount = 0;
+let id = "";
+let typeid = "";
 
 if (token) {
   document.body.innerHTML = private;
-  let elmain = document.querySelector(".hero__main");
 
-  getincomesfordashbord();
-  getexpensesfordashbord();
+  renderDashboard();
   sidebarbtns();
   burger();
   getcolor();
   windowclick();
-  renderfirst();
-
-  // === income modal ===
-
-  const checkIncomesForm = setInterval(() => {
-    const elform = document.querySelector(".incomes-form");
-
-    if (elform) {
-      clearInterval(checkIncomesForm);
-
-      let eltitle = document.querySelector(".title");
-      let elamount = document.querySelector(".amount");
-      let elcatigory = document.querySelector(".catigory");
-      let eldescription = document.querySelector(".description");
-
-      elform.onsubmit = (evt) => {
-        evt.preventDefault();
-        addincome("income");
-        document.querySelector(".incomes-modal").classList.remove("flex");
-      };
-
-      async function addincome(type) {
-        let today = new Date();
-        let formattedDate = `${today.getFullYear()}-${String(
-          today.getMonth() + 1
-        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-
-        try {
-          let res = await fetch(
-            `https://kirim-chiqim-new.onrender.com/add-${type}`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                token: token,
-              },
-              body: JSON.stringify({
-                title: eltitle.value,
-                amount: +elamount.value,
-                type: "income",
-                category: elcatigory.value,
-                description: eldescription.value,
-                date: formattedDate,
-              }),
-            }
-          );
-
-          let data = await res.json();
-          if (res.ok) {
-            alert("Ma'lumot qo‘shildi");
-            eltitle.value = "";
-            elamount.value = "";
-            elcatigory.value = "";
-            eldescription.value = "";
-          } else {
-            alert("Xatolik yuz berdi!");
-          }
-
-          console.log(data);
-        } catch (err) {
-          console.error("Xatolik:", err);
-          alert("Server bilan bog‘lanishda xatolik yuz berdi");
-        }
-      }
-    }
-  }, 500);
-
-  // === expenses modal ===
-
-  const checkExpenseForm = setInterval(() => {
-    if (document.querySelector(".expenses-form")) {
-      clearInterval(checkExpenseForm);
-      let elformexpense = document.querySelector(".expenses-form");
-
-      elformexpense.onsubmit = (evt) => {
-        evt.preventDefault();
-        addexpense("expense");
-        document.querySelector(".expenses-modal").classList.remove("flex");
-      };
-
-      async function addexpense(type) {
-        let elexpensestitle = document.querySelector(".expenses-title");
-        let elexpensesamount = document.querySelector(".expenses-amount");
-        let elexpensescatigory = document.querySelector(".expenses-catigory");
-        let elexpensesdescription = document.querySelector(
-          ".expenses-description"
-        );
-
-        let today = new Date();
-        let formattedDate = `${today.getFullYear()}-${String(
-          today.getMonth() + 1
-        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-
-        let res = await fetch(
-          `https://kirim-chiqim-new.onrender.com/add-${type}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              token: token,
-            },
-            body: JSON.stringify({
-              title: elexpensestitle.value,
-              amount: +elexpensesamount.value,
-              type: "expense",
-              category: elexpensescatigory.value,
-              description: elexpensesdescription.value,
-              date: formattedDate,
-            }),
-          }
-        );
-
-        let data = await res.json();
-        if (res.ok) {
-          alert("Ma'lumot qo‘shildi");
-          elexpensestitle.value = "";
-          elexpensesamount.value = "";
-          elexpensescatigory.value = "";
-          elexpensesdescription.value = "";
-        } else {
-          alert("Xatolik yuz berdi!");
-        }
-        console.log(data);
-      }
-    }
-  }, 500);
-
-  elmain.innerHTML = dashboard;
+  addIncomes();
+  addExpenses();
 } else {
   document.body.innerHTML = public;
 }
-let id = "";
 
 async function getincomes(type) {
   let ellist = document.querySelector(".incomes__list");
@@ -201,12 +74,6 @@ async function getexpensesfordashbord() {
   document.querySelector(".order-expenses").innerHTML = data.length;
 }
 
-function renderfirst() {
-  let elmain = document.querySelector(".hero__main");
-  elmain.innerHTML = incomes;
-  getincomes("incomes");
-}
-
 async function getall() {
   let ellist = document.querySelector(".incomes__list");
   ellist.innerHTML = `
@@ -221,8 +88,6 @@ async function getall() {
       token: token,
     },
   });
-
-  ellist.innerHTML = "";
 
   let data = await res.json();
 
@@ -259,12 +124,137 @@ async function deleteitem(type, id) {
       },
     }
   );
-  let data = await res.json();
-  console.log(data);
+
+  return await res.json();
+}
+
+function addIncomes() {
+  const checkIncomesForm = setInterval(() => {
+    const elform = document.querySelector(".incomes-form");
+
+    if (elform) {
+      clearInterval(checkIncomesForm);
+
+      let eltitle = document.querySelector(".title");
+      let elamount = document.querySelector(".amount");
+      let elcatigory = document.querySelector(".catigory");
+      let eldescription = document.querySelector(".description");
+
+      elform.onsubmit = (evt) => {
+        evt.preventDefault();
+        addincome("income");
+        document.querySelector(".incomes-modal").classList.remove("flex");
+      };
+
+      async function addincome(type) {
+        let today = new Date();
+        let formattedDate = `${today.getFullYear()}-${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+        let res = await fetch(
+          `https://kirim-chiqim-new.onrender.com/add-${type}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              title: eltitle.value,
+              amount: +elamount.value,
+              type: "income",
+              category: elcatigory.value,
+              description: eldescription.value,
+              date: formattedDate,
+            }),
+          }
+        );
+
+        let data = await res.json();
+        if (res.ok) {
+          eltitle.value = "";
+          elamount.value = "";
+          elcatigory.value = "";
+          eldescription.value = "";
+        }
+
+        console.log(data);
+
+        getincomes("incomes");
+      }
+    }
+  }, 500);
+}
+
+function addExpenses() {
+  const checkExpenseForm = setInterval(() => {
+    if (document.querySelector(".expenses-form")) {
+      clearInterval(checkExpenseForm);
+      let elformexpense = document.querySelector(".expenses-form");
+
+      elformexpense.onsubmit = (evt) => {
+        evt.preventDefault();
+        addexpense("expense");
+        document.querySelector(".expenses-modal").classList.remove("flex");
+      };
+
+      async function addexpense(type) {
+        let elexpensestitle = document.querySelector(".expenses-title");
+        let elexpensesamount = document.querySelector(".expenses-amount");
+        let elexpensescatigory = document.querySelector(".expenses-catigory");
+        let elexpensesdescription = document.querySelector(
+          ".expenses-description"
+        );
+
+        let today = new Date();
+        let formattedDate = `${today.getFullYear()}-${String(
+          today.getMonth() + 1
+        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+
+        let res = await fetch(
+          `https://kirim-chiqim-new.onrender.com/add-${type}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              token: token,
+            },
+            body: JSON.stringify({
+              title: elexpensestitle.value,
+              amount: +elexpensesamount.value,
+              type: "expense",
+              category: elexpensescatigory.value,
+              description: elexpensesdescription.value,
+              date: formattedDate,
+            }),
+          }
+        );
+
+        let data = await res.json();
+        if (res.ok) {
+          elexpensestitle.value = "";
+          elexpensesamount.value = "";
+          elexpensescatigory.value = "";
+          elexpensesdescription.value = "";
+        }
+        console.log(data);
+        getincomes("expenses");
+      }
+    }
+  }, 500);
+}
+
+function renderDashboard() {
+  let elmain = document.querySelector(".hero__main");
+  elmain.innerHTML = dashboard;
+
+  getincomesfordashbord();
+  getexpensesfordashbord();
 }
 
 function windowclick() {
-  window.onclick = (evt) => {
+  window.onclick = async (evt) => {
     // ===delete===
     if (
       evt.target.classList.contains("delete") ||
@@ -273,6 +263,7 @@ function windowclick() {
       document.querySelector(".modal").classList.add("flex");
       document.querySelector(".modal-content").classList.add("block");
       id = evt.target.dataset.id;
+      typeid = evt.target.dataset.type;
     }
 
     if (
@@ -284,13 +275,30 @@ function windowclick() {
     }
 
     if (evt.target.classList.contains("delete-modal")) {
-      deleteitem("income", id);
-      deleteitem("expense", id);
-      document.querySelector(".modal").classList.remove("flex");
-      document.querySelector(".modal-content").classList.remove("block");
+      if (evt.target.classList.contains("delete-modal")) {
+        if (typeid === "income") {
+          await deleteitem("income", id);
+        }
+        if (typeid === "expense") {
+          await deleteitem("expense", id);
+        }
 
-      document.querySelector(".modal-2").classList.add("flex");
-      document.querySelector(".modal-content-2").classList.add("block");
+        let elmain = document.querySelector(".hero__main");
+
+        if (elmain.innerHTML.includes("incomes page")) {
+          getincomes("incomes");
+        } else if (elmain.innerHTML.includes("expenses page")) {
+          getincomes("expenses");
+        } else if (elmain.innerHTML.includes("all page")) {
+          getall();
+        }
+
+        document.querySelector(".modal").classList.remove("flex");
+        document.querySelector(".modal-content").classList.remove("block");
+
+        document.querySelector(".modal-2").classList.add("flex");
+        document.querySelector(".modal-content-2").classList.add("block");
+      }
     }
 
     if (
@@ -300,7 +308,6 @@ function windowclick() {
       document.querySelector(".modal-2").classList.remove("flex");
       document.querySelector(".modal-content-2").classList.remove("block");
     }
-    // ===delete===
 
     //=== log out===
     if (evt.target.classList.contains("log-out")) {
@@ -321,7 +328,6 @@ function windowclick() {
       logout();
     }
 
-    // ===log out===
 
     // === add income ===
 
@@ -335,23 +341,12 @@ function windowclick() {
     ) {
       document.querySelector(".incomes-modal").classList.remove("flex");
     }
-    // === add income ===
 
     // === add expenses ===
 
     if (evt.target.classList.contains("add-expenses")) {
       document.querySelector(".expenses-modal").classList.add("flex");
     }
-
-    // === add expenses ===
-
-    // if (
-    //   evt.target.classList.contains("edit") ||
-    //   evt.target.classList.contains("edit-icon")
-    // ) {
-    //   let id = evt.target.dataset.id;
-    //   edititem("income", id);
-    // }
   };
 }
 
@@ -393,10 +388,10 @@ function renderincomesorexpenses(array, list) {
 
 
             <div class="btn-group">
-            <button data-id=${el._id} class="delete">
-              <img data-id=${
-                el._id
-              } class="icon delete-icon" src="./img/Group.svg" alt="">
+            <button data-type=${el.type} data-id=${el._id} class="delete">
+              <img data-type=${el.type} data-id=${
+      el._id
+    }  class="icon delete-icon" src="./img/Group.svg" alt="">
             </button>
             <button data-id=${el._id} class="edit">
               <img data-id=${
@@ -469,26 +464,3 @@ function logout() {
   localStorage.removeItem("token");
   window.location.reload();
 }
-
-// async function edititem(type, id) {
-//   let res = await fetch(
-//     `https://kirim-chiqim-new.onrender.com/edit-${type}/${id}`,
-//     {
-//       method: "PUT",
-//       headers: {
-//         "Content-type": "application/json",
-//         token: token,
-//       },
-//       body: JSON.stringify({
-//         title:'asda',
-//         amount: 12,
-//         type: "income",
-//         category: 'sadasd',
-//         description: 'sddadsa',
-//         date: '25-25-25',
-//       }),
-//     }
-//   );
-
-//   console.log(res);
-// }

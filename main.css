@@ -488,62 +488,62 @@ svg {
   justify-content: center;
   z-index: 999;
 }
-.total {
-  display: flex;
-  align-items: center;
+.dashboard-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 30px;
+  color: #009 ;
 }
+
 .dashboard__list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  justify-content: center;
-  margin: 0 20px;
-  gap: 10px;
+  gap: 20px;
+  padding: 0 20px;
 }
+
 .dashboard__item {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  padding: 70px 0;
-  background-color: #fff;
-  border-radius: 5px;
+  background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.modal-top {
   margin-bottom: 10px;
 }
-.dashboard__item--active {
-  background-color: green;
+
+.dashboard__item--expense {
+  background: linear-gradient(to right, #f87171, #ef4444);
+  color: white;
 }
-.dashboard__item-active {
-  background-color: red;
+
+.dashboard__item--income {
+  background: linear-gradient(to right, #34d399, #10b981);
+  color: white;
 }
-.about-item__div {
+
+.dashboard__label {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.dashboard__value {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.dashboar-page-title {
+  font-size: 30px;
   text-align: center;
-}
-.about-expenses {
-  color: #f6f6f6;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-.about-incomes {
-  color: #f6f6f6;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-.total-expenses {
-  font-size: 30px;
-  color: #fff;
-}
-.order-expenses {
-  font-size: 30px;
-  color: #fff;
-}
-.total-incomes {
-  font-size: 30px;
-  color: #fff;
-}
-.order-incomes {
-  font-size: 30px;
-  color: #fff;
+  margin-bottom: 20px;
+  color: #009;
+  padding-top: 30px;
+  border-top: 1px solid #009;
 }
 
 @media (max-width: 1400px) {
@@ -683,6 +683,9 @@ svg {
 }
 
 @media (max-width: 550px) {
+  .dashboar-page-title {
+    font-size: 25px;
+  }
   .dashboard__list {
     display: grid;
     grid-template-columns: 1fr;
@@ -711,10 +714,10 @@ svg {
     font-size: 14px;
   }
   .modal-title {
-    font-size: 15px;
+    font-size: 20px;
   }
   .modal-content {
-    padding: 10px;
+    padding: 22px 15px;
   }
   .modal__btn-group {
     margin-top: 10px;
@@ -726,6 +729,25 @@ svg {
   .delete-modal {
     width: 50%;
     padding: 6px;
+  }
+  .incomes-modal-title {
+    font-size: 20px;
+  }
+
+  .expenses-modal-content {
+    width: 100%;
+    margin: 0;
+  }
+  .expenses-modal {
+    height: 100%;
+    left: 0;
+  }
+  .add-incomes-content {
+    border-radius: 0;
+    margin: 0;
+  }
+  .add-incomes {
+    align-items: stretch;
   }
 }
 

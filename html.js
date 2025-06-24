@@ -2,7 +2,7 @@ let private = `
 <!-- 1 - Income o'chirish modali -->
 <div class="modal">
   <div class="modal-content">
-    <h2 class="modal-title">incomeni ochirishni hohlaysizmi</h2>
+    <h2 class="modal-title">malumotni ochirishni hohlaysizmi</h2>
     <div class="modal__btn-group">
       <button class="close-modal">close</button>
       <button class="delete-modal">delete</button>
@@ -188,30 +188,34 @@ let public = `
 `;
 
 let incomes = `
-  <div class="list-top">
-  <h1 class="hero__subtitle">
-    incomes page
-  </h1>
+<div class="list-top">
+  <h1 class="hero__subtitle">incomes page</h1>
   <button class="add-income add-item">add incomes</button>
-  </div>
+</div>
 
- <ul class="incomes__list"></ul>
+<ul class="incomes__list"></ul>
 
- <div class="incomes-modal add-incomes">
+<div class="incomes-modal add-incomes">
   <div class="incomes-modal-content add-incomes-content">
-  <div class="modal-top">
-  <h2 class="incomes-modal-title add-incomes-title">creat income</h2>
-  <button class="incomes-close-btn">
-  <img class="incomes-close-btn-icon" src="./img/images.png" alt="">
-  </button>
-  </div>
-    <form action="" class="incomes-form">
-      <input type="text" class="title form-input" placeholder="title" />
-      <input type="number" class="amount form-input" placeholder="amount" />
-      <input type="text" class="catigory form-input" placeholder="catigory" />
-      <input type="text" class="description form-input" placeholder="description" />
-      <button class="submit">submit</button>
-    </form>
+    <div class="add-incomes-main">
+      <div class="modal-top">
+        <h2 class="incomes-modal-title add-incomes-title">creat income</h2>
+        <button class="incomes-close-btn">
+          <img class="incomes-close-btn-icon" src="./img/images.png" alt="" />
+        </button>
+      </div>
+      <form action="" class="incomes-form">
+        <input type="text" class="title form-input" placeholder="title" />
+        <input type="number" class="amount form-input" placeholder="amount" />
+        <input type="text" class="catigory form-input" placeholder="catigory" />
+        <input
+          type="text"
+          class="description form-input"
+          placeholder="description"
+        />
+        <button class="submit">submit</button>
+      </form>
+    </div>
   </div>
 </div>
 
@@ -228,7 +232,7 @@ let expenses = `
 
  <ul class="incomes__list"></ul>
 
-   <div class="expenses-modal incomes-modal">
+   <div class="expenses-modal incomes-modal add-incomes">
   <div class="expenses-modal-content add-incomes-content">
   <div class="modal-top">
   <h2 class="incomes-modal-title add-incomes-title">creat expenses</h2>
@@ -255,35 +259,28 @@ let all = `
 `;
 
 let dashboard = `
-<ul class="dashboard__list">
-  <ul class="dashboard__list-list">
-    <li class="dashboard__item dashboard__item-active">
-      <div class="about-item__div">
-        <h4 class="about-expenses">expenses total count</h4>
-        <h3 class="total-expenses">loading...</h3>
-      </div>
-    </li>
-    <li class="dashboard__item dashboard__item-active">
-      <div class="about-item__div">
-        <h4 class="about-expenses">expenses order count</h4>
-        <h3 class="order-expenses">loading...</h3>
-      </div>
-    </li>
-  </ul>
-  <ul class="dashboard__list-list">
-    <li class="dashboard__item dashboard__item--active">
-      <div class="about-item__div">
-        <h4 class="about-incomes">incomes total count</h4>
-        <h3 class="total-incomes">loading...</h3>
-      </div>
-    </li>
-    <li class="dashboard__item dashboard__item--active">
-      <div class="about-item__div">
-        <h4 class="about-incomes">incomes order count</h4>
-        <h3 class="order-incomes">loading...</h3>
-      </div>
-    </li>
-  </ul>
-</ul>
+<h2 class="dashboard-title">Dashboard</h2>
+<div class="dashboard__list">
+  <div class="dashboard__item dashboard__item--expense">
+    <h4 class="dashboard__label">Total Expenses</h4>
+    <h3 class="dashboard__value total-expenses">loading...</h3>
+  </div>
+
+  <div class="dashboard__item dashboard__item--expense">
+    <h4 class="dashboard__label">Expenses Count</h4>
+    <h3 class="dashboard__value order-expenses">loading...</h3>
+  </div>
+
+  <div class="dashboard__item dashboard__item--income">
+    <h4 class="dashboard__label">Total Incomes</h4>
+    <h3 class="dashboard__value total-incomes">loading...</h3>
+  </div>
+
+  <div class="dashboard__item dashboard__item--income">
+    <h4 class="dashboard__label">Incomes Count</h4>
+    <h3 class="dashboard__value order-incomes">loading...</h3>
+  </div>
+</div>
+
 
 `;
