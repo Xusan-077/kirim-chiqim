@@ -13,6 +13,10 @@ let private = `
 <!-- 2 - Ma'lumot o'chirildi modali -->
 <div class="modal-2 modal">
   <div class="modal-content-2 modal-content">
+  <div class="malumot-div">
+    <span class="malumot-div-span"></span>
+    <span class="malumot-div-span"></span>
+  </div>
     <h2 class="modal-title-2 modal-title">malumot ochirildi</h2>
     <div class="modal__btn-group">
       <button class="close-modal-2 close-modal">close</button>
@@ -151,9 +155,14 @@ let private = `
           <div class="sidebar__inner">
             <h2 class="public-title">private</h2>
             <div class="hero-top-div">
+            <button class="light-dark">light</button>
             <button class="log-out public-link">log out</button>
             <button class="burger-btn">
-              <img class="burger-icon" src="./img/menu.svg" alt="">
+            <div class="spans-burger">
+              <span class="span-burger"></span>
+              <span class="span-burger"></span>
+              <span class="span-burger"></span>
+            </div>
             </button>   
             </div>
           </div>
@@ -219,6 +228,20 @@ let incomes = `
   </div>
 </div>
 
+
+<div class="rozilik-modal-2 modal-2 modal">
+  <div class="rozilik-modal-content-2 modal-content-2 modal-content">
+  <div class="malumot-div-red-2 malumot-div">
+    <span class="malumot-div-span"></span>
+    <span class="malumot-div-span"></span>
+  </div>
+    <h2 class="rozilik-title modal-title-2 modal-title">malumot qoshildi</h2>
+    <div class="modal__btn-group">
+      <button class="rozilik-close-2 close-modal-2 close-modal">close</button>
+    </div>
+  </div>
+</div>
+
 `;
 let expenses = `
   <div class="list-top">
@@ -249,6 +272,21 @@ let expenses = `
     </form>
   </div>
 </div>
+
+
+<div class="rozilik-modal modal-2 modal">
+  <div class="rozilik-modal-content modal-content-2 modal-content">
+  <div class="malumot-div-red malumot-div">
+    <span class="malumot-div-span"></span>
+    <span class="malumot-div-span"></span>
+  </div>
+    <h2 class="rozilik-title modal-title-2 modal-title">malumot qoshildi</h2>
+    <div class="modal__btn-group">
+      <button class="rozilik-close close-modal-2 close-modal">close</button>
+    </div>
+  </div>
+</div>
+
 `;
 let all = `
   <h1 class="hero__subtitle">
@@ -261,6 +299,17 @@ let all = `
 let dashboard = `
 <h2 class="dashboard-title">Dashboard</h2>
 <div class="dashboard__list">
+
+<div class="dashboard__item dashboard__item--income">
+  <h4 class="dashboard__label">Total Incomes</h4>
+  <h3 class="dashboard__value total-incomes">loading...</h3>
+</div>
+
+<div class="dashboard__item dashboard__item--income">
+  <h4 class="dashboard__label">Incomes Count</h4>
+  <h3 class="dashboard__value order-incomes">loading...</h3>
+</div>
+
   <div class="dashboard__item dashboard__item--expense">
     <h4 class="dashboard__label">Total Expenses</h4>
     <h3 class="dashboard__value total-expenses">loading...</h3>
@@ -271,16 +320,15 @@ let dashboard = `
     <h3 class="dashboard__value order-expenses">loading...</h3>
   </div>
 
-  <div class="dashboard__item dashboard__item--income">
-    <h4 class="dashboard__label">Total Incomes</h4>
-    <h3 class="dashboard__value total-incomes">loading...</h3>
+
   </div>
 
-  <div class="dashboard__item dashboard__item--income">
-    <h4 class="dashboard__label">Incomes Count</h4>
-    <h3 class="dashboard__value order-incomes">loading...</h3>
-  </div>
+<div class="dashboard__list-2">
+<div class="dashboard__item--active dashboard__item">
+<h4 class="dashboard__label">all totla</h4>
+<h3 class="all-title dashboard__value order-incomes ">loading...</h3>
 </div>
 
+</div>
 
 `;

@@ -7,6 +7,7 @@ let typeid = "";
 if (token) {
   document.body.innerHTML = private;
 
+  lightdark();
   renderDashboard();
   sidebarbtns();
   burger();
@@ -14,6 +15,7 @@ if (token) {
   windowclick();
   addIncomes();
   addExpenses();
+  preventDefault();
 } else {
   document.body.innerHTML = public;
 }
@@ -38,6 +40,33 @@ async function getincomes(type) {
   renderincomesorexpenses(data, ellist);
 }
 
+async function renderDashboard() {
+  let elmain = document.querySelector(".hero__main");
+  elmain.innerHTML = dashboard;
+
+  allincomesamount = 0;
+  allexpensesamount = 0;
+
+  await getincomesfordashbord();
+  await getexpensesfordashbord();
+
+  let alltotla = allincomesamount - allexpensesamount;
+
+  if (alltotla > 0) {
+    document
+      .querySelector(".dashboard__item--active")
+      .classList.add("green-total");
+    document.querySelector(".all-title").innerHTML = "+" + alltotla;
+  } else {
+    document
+      .querySelector(".dashboard__item--active")
+      .classList.add("red-total");
+    document.querySelector(".all-title").innerHTML = alltotla;
+  }
+
+  console.log(alltotla);
+}
+
 async function getincomesfordashbord() {
   let res = await fetch(`https://kirim-chiqim-new.onrender.com/get-incomes`, {
     method: "GET",
@@ -52,8 +81,19 @@ async function getincomesfordashbord() {
     allincomesamount += el.amount;
   });
 
-  document.querySelector(".total-incomes").innerHTML = allincomesamount;
-  document.querySelector(".order-incomes").innerHTML = data.length;
+  if (
+    document.querySelector(".total-incomes") &&
+    document.querySelector(".order-incomes")
+  ) {
+    let elincometotal = document.querySelector(".total-incomes");
+    let elincomeorder = document.querySelector(".order-incomes");
+
+    elincometotal.innerHTML = allincomesamount;
+    elincomeorder.innerHTML = data.length;
+
+    elincometotal.classList.add("green-color");
+    elincomeorder.classList.add("green-color");
+  }
 }
 
 async function getexpensesfordashbord() {
@@ -70,8 +110,19 @@ async function getexpensesfordashbord() {
     allexpensesamount += el.amount;
   });
 
-  document.querySelector(".total-expenses").innerHTML = allexpensesamount;
-  document.querySelector(".order-expenses").innerHTML = data.length;
+  if (
+    document.querySelector(".total-expenses") &&
+    document.querySelector(".order-expenses")
+  ) {
+    let elexpensetotal = document.querySelector(".total-expenses");
+    let elexpenseorder = document.querySelector(".order-expenses");
+
+    elexpensetotal.innerHTML = "-" + allexpensesamount;
+    elexpenseorder.innerHTML = "-" + data.length;
+
+    elexpensetotal.classList.add("red-color");
+    elexpenseorder.classList.add("red-color");
+  }
 }
 
 async function getall() {
@@ -125,7 +176,9 @@ async function deleteitem(type, id) {
     }
   );
 
-  return await res.json();
+  let data = await res.json();
+  console.log(data);
+  console.log(res);
 }
 
 function addIncomes() {
@@ -143,7 +196,6 @@ function addIncomes() {
       elform.onsubmit = (evt) => {
         evt.preventDefault();
         addincome("income");
-        document.querySelector(".incomes-modal").classList.remove("flex");
       };
 
       async function addincome(type) {
@@ -172,16 +224,47 @@ function addIncomes() {
         );
 
         let data = await res.json();
+
         if (res.ok) {
           eltitle.value = "";
           elamount.value = "";
           elcatigory.value = "";
           eldescription.value = "";
         }
-
         console.log(data);
 
-        getincomes("incomes");
+        document.querySelector(".incomes-modal").classList.remove("flex");
+        document.querySelector(".rozilik-modal-2").classList.add("flex");
+        document
+          .querySelector(".rozilik-modal-content-2")
+          .classList.add("block");
+
+        const title = document.querySelector(".rozilik-title");
+
+        title.innerHTML = "Muvaffaqiyatli qo‘shildi";
+        title.style.color = "green";
+        document.querySelector(".malumot-div-red-2").classList.remove("red");
+
+        if (res.ok) {
+          document.querySelector(".rozilik-close-2").onclick = () => {
+            document.querySelector(".rozilik-modal-2").classList.remove("flex");
+            document
+              .querySelector(".rozilik-modal-content-2")
+              .classList.remove("block");
+            getincomes("incomes");
+          };
+        } else {
+          title.innerHTML = "Xatolik yuz berdi";
+          title.style.color = "red";
+          document.querySelector(".malumot-div-red-2").classList.add("red");
+
+          document.querySelector(".rozilik-close-2").onclick = () => {
+            document.querySelector(".rozilik-modal-2").classList.remove("flex");
+            document
+              .querySelector(".rozilik-modal-content-2")
+              .classList.remove("block");
+          };
+        }
       }
     }
   }, 500);
@@ -196,61 +279,90 @@ function addExpenses() {
       elformexpense.onsubmit = (evt) => {
         evt.preventDefault();
         addexpense("expense");
-        document.querySelector(".expenses-modal").classList.remove("flex");
       };
+    }
 
-      async function addexpense(type) {
-        let elexpensestitle = document.querySelector(".expenses-title");
-        let elexpensesamount = document.querySelector(".expenses-amount");
-        let elexpensescatigory = document.querySelector(".expenses-catigory");
-        let elexpensesdescription = document.querySelector(
-          ".expenses-description"
-        );
+    async function addexpense(type) {
+      let elexpensestitle = document.querySelector(".expenses-title");
+      let elexpensesamount = document.querySelector(".expenses-amount");
+      let elexpensescatigory = document.querySelector(".expenses-catigory");
+      let elexpensesdescription = document.querySelector(
+        ".expenses-description"
+      );
 
-        let today = new Date();
-        let formattedDate = `${today.getFullYear()}-${String(
-          today.getMonth() + 1
-        ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+      let today = new Date();
+      let formattedDate = `${today.getFullYear()}-${String(
+        today.getMonth() + 1
+      ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
-        let res = await fetch(
-          `https://kirim-chiqim-new.onrender.com/add-${type}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              token: token,
-            },
-            body: JSON.stringify({
-              title: elexpensestitle.value,
-              amount: +elexpensesamount.value,
-              type: "expense",
-              category: elexpensescatigory.value,
-              description: elexpensesdescription.value,
-              date: formattedDate,
-            }),
-          }
-        );
-
-        let data = await res.json();
-        if (res.ok) {
-          elexpensestitle.value = "";
-          elexpensesamount.value = "";
-          elexpensescatigory.value = "";
-          elexpensesdescription.value = "";
+      let res = await fetch(
+        `https://kirim-chiqim-new.onrender.com/add-${type}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+          body: JSON.stringify({
+            title: elexpensestitle.value,
+            amount: +elexpensesamount.value,
+            type: "expense",
+            category: elexpensescatigory.value,
+            description: elexpensesdescription.value,
+            date: formattedDate,
+          }),
         }
-        console.log(data);
-        getincomes("expenses");
+      );
+
+      let data = await res.json();
+      if (res.ok) {
+        elexpensestitle.value = "";
+        elexpensesamount.value = "";
+        elexpensescatigory.value = "";
+        elexpensesdescription.value = "";
+      }
+      console.log(data);
+
+      let rozilik = document.querySelector(".rozilik-title");
+      let elclass = document.querySelector(".malumot-div-red");
+      rozilik.innerHTML = "malumot qo`shildi";
+      rozilik.style.color = "green";
+      elclass.classList.remove("red");
+
+      if (res.ok) {
+        document.querySelector(".expenses-modal").classList.remove("flex");
+
+        document.querySelector(".rozilik-modal").classList.add("flex");
+        document.querySelector(".rozilik-modal-content").classList.add("block");
+
+        document.querySelector(".rozilik-close").onclick = () => {
+          document.querySelector(".rozilik-modal").classList.remove("flex");
+          document
+            .querySelector(".rozilik-modal-content")
+            .classList.remove("block");
+
+          getincomes("expenses");
+        };
+      }
+
+      if (!res.ok) {
+        document.querySelector(".expenses-modal").classList.remove("flex");
+        document.querySelector(".rozilik-modal").classList.add("flex");
+        document.querySelector(".rozilik-modal-content").classList.add("block");
+
+        rozilik.innerHTML = "Xatolik yuz berdi";
+        rozilik.style.color = "red";
+        elclass.classList.add("red");
+
+        document.querySelector(".rozilik-close").onclick = () => {
+          document.querySelector(".rozilik-modal").classList.remove("flex");
+          document
+            .querySelector(".rozilik-modal-content")
+            .classList.remove("block");
+        };
       }
     }
   }, 500);
-}
-
-function renderDashboard() {
-  let elmain = document.querySelector(".hero__main");
-  elmain.innerHTML = dashboard;
-
-  getincomesfordashbord();
-  getexpensesfordashbord();
 }
 
 function windowclick() {
@@ -260,10 +372,12 @@ function windowclick() {
       evt.target.classList.contains("delete") ||
       evt.target.classList.contains("delete-icon")
     ) {
+      const deleteBtn = evt.target.closest(".delete");
+      id = deleteBtn.dataset.id;
+      typeid = deleteBtn.dataset.type;
+
       document.querySelector(".modal").classList.add("flex");
       document.querySelector(".modal-content").classList.add("block");
-      id = evt.target.dataset.id;
-      typeid = evt.target.dataset.type;
     }
 
     if (
@@ -328,7 +442,6 @@ function windowclick() {
       logout();
     }
 
-
     // === add income ===
 
     if (evt.target.classList.contains("add-income")) {
@@ -389,14 +502,7 @@ function renderincomesorexpenses(array, list) {
 
             <div class="btn-group">
             <button data-type=${el.type} data-id=${el._id} class="delete">
-              <img data-type=${el.type} data-id=${
-      el._id
-    }  class="icon delete-icon" src="./img/Group.svg" alt="">
-            </button>
-            <button data-id=${el._id} class="edit">
-              <img data-id=${
-                el._id
-              } class="icon edit-icon" src="./img/edit.jpg" alt="">
+             <span class="delete-icon close-btn">✕</span>
             </button>
             </div>
             </li>
@@ -430,37 +536,107 @@ function burger() {
 
 function sidebarbtns() {
   let elbtns = document.querySelectorAll(".sidebar-btn");
-
   let elmain = document.querySelector(".hero__main");
 
   elbtns.forEach((btn) => {
     btn.onclick = (evt) => {
-      if (evt.target.innerHTML == "incomes") {
-        elmain.innerHTML = incomes;
-        getincomes(evt.target.innerHTML);
-      }
-      if (evt.target.innerHTML == "expenses") {
-        elmain.innerHTML = expenses;
-        getincomes(evt.target.innerHTML);
-      }
-      if (evt.target.innerHTML == "dashboard") {
-        elmain.innerHTML = dashboard;
+      const page = evt.target.innerHTML.trim().toLowerCase();
+      const elsidebar = document.querySelector(".sidebar");
 
-        getincomesfordashbord();
-        getexpensesfordashbord();
+      // Hammasidan classni olib tashla
+      elbtns.forEach((b) => b.classList.remove("btncolor"));
+      // Faoliga class qo‘sh
+      btn.classList.add("btncolor");
+
+      switch (page) {
+        case "incomes":
+          elmain.innerHTML = incomes;
+          getincomes("incomes");
+          break;
+
+        case "expenses":
+          elmain.innerHTML = expenses;
+          getincomes("expenses");
+          break;
+
+        case "dashboard":
+          elmain.innerHTML = dashboard;
+          getincomesfordashbord();
+          getexpensesfordashbord();
+          break;
+
+        case "all":
+          elmain.innerHTML = all;
+          getall();
+          break;
       }
-      if (evt.target.innerHTML == "all") {
-        elmain.innerHTML = all;
-        getall();
-      }
-      let elsidebar = document.querySelector(".sidebar");
 
       elsidebar.classList.toggle("block");
     };
+  });
+
+  // === Boshida dashboard tugmasiga class berish ===
+  elbtns.forEach((btn) => {
+    if (btn.innerHTML.trim().toLowerCase() === "dashboard") {
+      btn.classList.add("btncolor");
+    }
   });
 }
 
 function logout() {
   localStorage.removeItem("token");
+  localStorage.removeItem("mode");
   window.location.reload();
+}
+
+function lightdark() {
+  const elbtn = document.querySelector(".light-dark");
+
+  const savedMode = localStorage.getItem("mode");
+  if (savedMode === "dark") {
+    document.body.classList.add("dark-mode");
+    elbtn.innerHTML = "light";
+  } else {
+    elbtn.innerHTML = "dark";
+  }
+
+  elbtn.onclick = () => {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+      localStorage.setItem("mode", "dark");
+      elbtn.innerHTML = "light";
+    } else {
+      localStorage.setItem("mode", "light");
+      elbtn.innerHTML = "dark";
+    }
+  };
+}
+
+function preventDefault() {
+  document.onkeydown = function (e) {
+    if (e.key === "F12") {
+      return false;
+    }
+
+    if (e.ctrlKey && e.shiftKey && e.key === "I") {
+      return false;
+    }
+
+    if (e.ctrlKey && e.shiftKey && e.key === "J") {
+      return false;
+    }
+
+    if (e.ctrlKey && e.key === "u") {
+      return false;
+    }
+
+    if (e.ctrlKey && e.shiftKey && e.key === "C") {
+      return false;
+    }
+  };
+
+  document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+  });
 }
